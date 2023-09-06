@@ -1,7 +1,7 @@
 # Usage
 
 ```js
-import storageObject from "https://deno.land/x/storage_object@0.0.1.0/main.js"
+import storageObject from "https://deno.land/x/storage_object@0.0.2.0/main.js"
 
 // saves it to localstorage
 storageObject.user = {name:"bob"}

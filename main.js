@@ -3,9 +3,8 @@ import { watch } from "https://esm.sh/@vue-reactivity/watch@0.2.0"
 
 const localStorage = globalThis.localStorage
 
-const coreObject = {}
-export default new Proxy(coreObject, {
-    get(coreObject, key) {
+export const storageObject = new Proxy(localStorage, {
+    get(self, key) {
         let rawValue 
         try {
             rawValue = localStorage.getItem(key)
@@ -21,8 +20,23 @@ export default new Proxy(coreObject, {
             return rawValue
         }
     },
-    set(coreObject, key, newValue) {
+    set(self, key, newValue) {
         localStorage.setItem(key, JSON.stringify(newValue))
         return true
     },
+    deleteProperty(self, key) {
+        try {
+            return localStorage.removeItem(key)
+        } catch (error) {
+            
+        }
+    },
+    ownKeys(self, ...args) {
+        return Object.keys(localStorage)
+    },
+    has(self, key) {
+        return Object.keys(localStorage).includes(key)
+    },
 })
+
+export default storageObject
