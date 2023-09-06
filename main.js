@@ -1,10 +1,10 @@
-const { reactive } = require("@vue/reactivity")
-const { watch } = require("@vue-reactivity/watch")
+import { reactive } from "https://esm.sh/@vue/reactivity@3.3.4"
+import { watch } from "https://esm.sh/@vue-reactivity/watch@0.2.0"
 
-const localStorage = window.localStorage
+const localStorage = globalThis.localStorage
 
 const coreObject = {}
-const storageObject = module.exports = new Proxy(coreObject, {
+export default new Proxy(coreObject, {
     get(coreObject, key) {
         let rawValue 
         try {
@@ -23,5 +23,6 @@ const storageObject = module.exports = new Proxy(coreObject, {
     },
     set(coreObject, key, newValue) {
         localStorage.setItem(key, JSON.stringify(newValue))
+        return true
     },
 })
