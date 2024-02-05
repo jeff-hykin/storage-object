@@ -25,6 +25,7 @@ export const createStorageObject = (path)=>{
         },
         set(self, key, newValue) {
             initCacheIfNeeded()
+            cache[key] = newValue
             FileSystem.write({
                 path,
                 data: yaml.stringify(cache),
