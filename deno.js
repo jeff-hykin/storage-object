@@ -3,19 +3,18 @@ import { FileSystem, glob } from "https://deno.land/x/quickr@0.6.60/main/file_sy
 
 export const createStorageObject = (path)=>{
     let hasBeenInit = false
-    let cache 
+    let cache = {}
     const initCacheIfNeeded = (path)=>{
         if (!hasBeenInit) {
             hasBeenInit = true
             try {
-                cache = yaml.parse(Deno.readTextFileSync(path))
-                if (Object.getPrototypeOf(cache) != Object.getPrototypeOf({})) {
-                    cache = {}
-                } else {
+                Object.assign(cache, yaml.parse(Deno.readTextFileSync(path)))
+                if (Object.getPrototypeOf(cache) == Object.getPrototypeOf({})) {
                     console.warn(`Note: it appears the cache ${JSON.stringify(path)} was corrupted. It will be reset`)
+                    FileSystem.sync.write({path, data: ""})
                 }
             } catch (error) {
-                FileSystem.sync.path({path, data: ""})
+                FileSystem.sync.write({path, data: ""})
             }
         }
     }
