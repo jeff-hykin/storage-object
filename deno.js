@@ -4,7 +4,7 @@ import { FileSystem, glob } from "https://deno.land/x/quickr@0.6.60/main/file_sy
 export const createStorageObject = (path)=>{
     let hasBeenInit = false
     let cache = {}
-    const initCacheIfNeeded = (path)=>{
+    const initCacheIfNeeded = ()=>{
         if (!hasBeenInit) {
             hasBeenInit = true
             try {
