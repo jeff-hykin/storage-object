@@ -26,7 +26,7 @@ export const createStorageObject = (path)=>{
         set(self, key, newValue) {
             initCacheIfNeeded()
             cache[key] = newValue
-            FileSystem.write({
+            FileSystem.sync.write({
                 path,
                 data: yaml.stringify(cache),
             })
@@ -37,7 +37,7 @@ export const createStorageObject = (path)=>{
             const itWasAKey = Object.hasOwn(cache, key)
             delete cache[key]
             if (itWasAKey) {
-                FileSystem.write({
+                FileSystem.sync.write({
                     path,
                     data: yaml.stringify(cache),
                 })
