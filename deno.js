@@ -9,7 +9,7 @@ export const createStorageObject = (path)=>{
             hasBeenInit = true
             try {
                 Object.assign(cache, yaml.parse(Deno.readTextFileSync(path)))
-                if (Object.getPrototypeOf(cache) == Object.getPrototypeOf({})) {
+                if (Object.getPrototypeOf(cache) != Object.getPrototypeOf({})) {
                     console.warn(`Note: it appears the cache ${JSON.stringify(path)} was corrupted. It will be reset`)
                     FileSystem.sync.write({path, data: ""})
                 }
